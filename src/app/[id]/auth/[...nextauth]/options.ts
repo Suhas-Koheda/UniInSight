@@ -4,6 +4,19 @@ import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import Person from "@/model/Person";
 
+
+type Credentials = {
+    username: string;
+    password: string;
+    id: string;
+};
+interface User {
+    _id: string;
+    username: string;
+    role: string;
+}
+
+
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -14,7 +27,11 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' },
                 id: { label: 'ID', type: 'text' },
             },
-            async authorize(credentials: any): Promise<any> {
+            async authorize(credentials: Credentials | undefined): Promise<any> {
+                if (!credentials) {
+                    throw new Error("Credentials not provided");
+                }
+
                 await dbConnect(); // Ensure connection is established
 
                 try {
@@ -30,8 +47,8 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("Invalid Credentials");
                     }
 
-                    console.log(credentials.id)
-                    console.log(user.role.toString())
+                    console.log(credentials.id);
+                    console.log(user.role.toString());
                     // Check if ID matches
                     if (credentials.id !== user.role.toString()) {
                         throw new Error("User not related to this");
@@ -41,7 +58,7 @@ export const authOptions: NextAuthOptions = {
                     return { _id: user._id, username: user.username, role: user.role };
                 } catch (err) {
                     console.error(err); // Log detailed error
-                    // @ts-ignore
+                    // @ts-expect-error
                     throw new Error(err.message || "Error logging in"); // Use specific error message
                 }
             }
