@@ -23,9 +23,11 @@ export default function DashboardPage({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div>
+        <div className="flex justify-center p-12">
+        <div className="flex flex-col justify-around">
             <h1>Welcome to your Dashboard, {session?.user?.name}</h1>
             <p>This is your unique route: {params.id}</p>
+        </div>
         </div>
     );
 }

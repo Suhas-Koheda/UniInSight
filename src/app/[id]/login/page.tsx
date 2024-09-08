@@ -55,16 +55,17 @@ export default function LoginPage() {
     };
 
     return (
-        <div>
+        <div className="grid cols-1 md:flex justify-around">
             {!error &&
-            (<div><h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            (<div className="items-center text-center"><h1 className="p-4 bg-red-300 rounded-lg my-4">Login</h1>
+            <form onSubmit={handleSubmit} className="flex flex-col items-center w-auto ">
                 <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
                     required
+                    className="bg-gray-100 text-black rounded-lg p-4"
                 />
                 <input
                     type="password"
@@ -72,18 +73,20 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     required
+                    className="bg-gray-100 text-black rounded-lg p-4 my-4"
                 />
-                <button type="submit">Login</button>
+                <button type="submit"  className="p-4 bg-button-bg rounded-lg">Login</button>
             </form>
         </div>
 )}
             {error && (
-                <div style={{ color: 'red', marginTop: '10px', border: '1px solid red', padding: '10px', borderRadius: '5px' }}>
+                // {{ color: 'red', marginTop: '10px', border: '1px solid red', padding: '10px', borderRadius: '5px' }}
+                <div className="red mt-4 border-2 border-red-600 w-fit p-4 h-fit rounded-lg">
                     {error}
                 </div>
             )}
             {error && (
-                <div><a href={`/${id}/login`}>Go back to Login</a></div>
+                <div className=" h-fit p-4 mt-4 bg-button-bg rounded-lg"><a href={`/${id}/login`}>Go back to Login</a></div>
             )}
         </div>
     );
