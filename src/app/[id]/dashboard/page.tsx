@@ -16,7 +16,7 @@ export default function DashboardPage({ params }: { params: { id: string } }) {
             console.log("User is unauthenticated, redirecting to /login");
             router.push("/login");
         }
-    }, [status, router]);
+    }, [status, session, router]); // Added session to dependency array
 
     if (status === "loading") {
         return <p>Loading...</p>;

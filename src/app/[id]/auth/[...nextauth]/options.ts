@@ -4,18 +4,11 @@ import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import Person from "@/model/Person";
 
-
 type Credentials = {
     username: string;
     password: string;
     id: string;
 };
-interface User {
-    _id: string;
-    username: string;
-    role: string;
-}
-
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -58,7 +51,7 @@ export const authOptions: NextAuthOptions = {
                     return { _id: user._id, username: user.username, role: user.role };
                 } catch (err) {
                     console.error(err); // Log detailed error
-                    // @ts-expect-error
+                    // @ts-expect-error: Specific error handling
                     throw new Error(err.message || "Error logging in"); // Use specific error message
                 }
             }
