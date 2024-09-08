@@ -4,13 +4,6 @@ import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import Person from "@/model/Person";
 
-// Define a User type
-type User = {
-    _id: string;
-    username: string;
-    role: string;
-};
-
 type Credentials = {
     username: string;
     password: string;
@@ -27,7 +20,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' },
                 id: { label: 'ID', type: 'text' },
             },
-            async authorize(credentials: Credentials | undefined): Promise<User | null> {
+            async authorize(credentials: Credentials | undefined): Promise<any> {
                 if (!credentials) {
                     throw new Error("Credentials not provided");
                 }
@@ -55,10 +48,11 @@ export const authOptions: NextAuthOptions = {
                     }
 
                     // Return user object if everything is correct
-                    return { _id: user._id.toString(), username: user.username, role: user.role };
+                    return { _id: user._id, username: user.username, role: user.role };
                 } catch (err) {
                     console.error(err); // Log detailed error
-                    throw new Error(err.message || "Error logging in");
+                    // @ts-expect-error: Specific error handling
+                    throw new Error(err.message || "Error logging in"); // Use specific error message
                 }
             }
         }),
