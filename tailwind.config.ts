@@ -8,7 +8,10 @@ const config: Config = {
     extend: {
       colors: {
         'header':'#2301b0',
-        'button-bg':'#b1c8e8',
+        'button-bg':'#8eb2ec',
+      },
+      boxShadow: {
+        'inner': 'inset 0 10px 30px -1px rgba(0, 100, 0, 0.5)',
       },
     },
   },
