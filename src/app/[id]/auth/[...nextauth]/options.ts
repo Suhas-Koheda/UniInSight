@@ -4,12 +4,6 @@ import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import Person from "@/model/Person";
 
-type Credentials = {
-    username: string;
-    password: string;
-    id: string;
-};
-
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -20,11 +14,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' },
                 id: { label: 'ID', type: 'text' },
             },
-            async authorize(credentials: Credentials | undefined): Promise<any> {
-                if (!credentials) {
-                    throw new Error("Credentials not provided");
-                }
-
+            async authorize(credentials: any): Promise<any> {
                 await dbConnect(); // Ensure connection is established
 
                 try {
@@ -40,19 +30,18 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("Invalid Credentials");
                     }
 
-                    console.log(credentials.id);
-                    console.log(user.role.toString());
+                    console.log(credentials.id)
+                    console.log(user.role.toString())
                     // Check if ID matches
                     if (credentials.id !== user.role.toString()) {
                         throw new Error("User not related to this");
                     }
 
                     // Return user object if everything is correct
-                    return { _id: user._id, username: user.username, role: user.role };
+                    return user;
                 } catch (err) {
                     console.error(err); // Log detailed error
-                    // @ts-expect-error: Specific error handling
-                    throw new Error(err.message || "Error logging in"); // Use specific error message
+                    throw new Error( "Error logging in"); // Use specific error message
                 }
             }
         }),
