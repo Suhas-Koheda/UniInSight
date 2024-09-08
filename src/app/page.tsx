@@ -4,9 +4,6 @@ import Logo from './images/LOGO.png';
 export default function Home() {
     return (
         <div className="w-auto">
-            <header className="h-20 w-screen bg-header">
-                <Image src={Logo} alt='Suhas Koheda' className='h-20 w-auto pl-4 pb-1'/>
-            </header>
             <div className="flex flex-col items-center w-auto">
                 <div className="grid cols-1 md:flex md:justify-around ">
                     <div className="p-14 text-center md:p-24 bg-button-bg rounded-3xl md:m-4 m-4 shadow-inner">
