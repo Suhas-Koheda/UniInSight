@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import Logo from './images/LOGO.png';
-
 export default function Home() {
     return (
         <div className="w-auto">
