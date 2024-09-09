@@ -2,63 +2,64 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { ComponentType } from "react";
 
-const DynamicPieChart = dynamic(
+const DynamicPieChart = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.PieChart as typeof import("recharts").PieChart
+      (mod) => mod.PieChart as ComponentType<any>
     ),
   { ssr: false }
 );
-const DynamicPie = dynamic(
+const DynamicPie = dynamic<ComponentType<any>>(
   () =>
-    import("recharts").then((mod) => mod.Pie as typeof import("recharts").Pie),
+    import("recharts").then((mod) => mod.Pie as ComponentType<any>),
   { ssr: false }
 );
-const DynamicBarChart = dynamic(
+const DynamicBarChart = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.BarChart as typeof import("recharts").BarChart
+      (mod) => mod.BarChart as ComponentType<any>
     ),
   { ssr: false }
 );
-const DynamicBar = dynamic(
+const DynamicBar = dynamic<ComponentType<any>>(
   () =>
-    import("recharts").then((mod) => mod.Bar as typeof import("recharts").Bar),
+    import("recharts").then((mod) => mod.Bar as ComponentType<any>),
   { ssr: false }
 );
-const DynamicXAxis = dynamic(
+const DynamicXAxis = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.XAxis as typeof import("recharts").XAxis
+      (mod) => mod.XAxis as ComponentType<any>
     ),
   { ssr: false }
 );
-const DynamicYAxis = dynamic(
+const DynamicYAxis = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.YAxis as typeof import("recharts").YAxis
+      (mod) => mod.YAxis as ComponentType<any>
     ),
   { ssr: false }
 );
-const DynamicTooltip = dynamic(
+const DynamicTooltip = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.Tooltip as typeof import("recharts").Tooltip
+      (mod) => mod.Tooltip as ComponentType<any>
     ),
   { ssr: false }
 );
-const DynamicLegend = dynamic(
+const DynamicLegend = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.Legend as typeof import("recharts").Legend
+      (mod) => mod.Legend as ComponentType<any>
     ),
   { ssr: false }
 );
-const DynamicCell = dynamic(
+const DynamicCell = dynamic<ComponentType<any>>(
   () =>
     import("recharts").then(
-      (mod) => mod.Cell as typeof import("recharts").Cell
+      (mod) => mod.Cell as ComponentType<any>
     ),
   { ssr: false }
 );
@@ -209,7 +210,7 @@ const MainPage = () => {
                         const value = context.raw || 0;
                         const total = context.dataset.data.reduce((a, b) => a + b, 0);
                         const percentage = ((value / total) * 100).toFixed(1);
-                        return \`\${label}: \${value} (\${percentage}%)\`;
+                        return \\${label}: \${value} (\${percentage}%)\;
                       }
                     }
                   }
@@ -247,119 +248,52 @@ const MainPage = () => {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-white text-black">
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        Student Data Visualization
-      </h1>
-
-      {/* Filter Options */}
-      <div className="bg-gray-100 p-4 mb-4 rounded-lg shadow-md max-w-xl mx-auto">
-        <div className="mb-4">
-          <label
-            htmlFor="filter-grades"
-            className="block text-lg font-semibold mb-2"
-          >
-            Filter by Grades:
-          </label>
+    <div>
+      <h1>Student Data Analysis</h1>
+      <div>
+        <label>
+          Grade Filter:
           <select
-            id="filter-grades"
             value={gradesFilter}
             onChange={(e) => setGradesFilter(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
           >
-            <option value="">All</option>
+            <option value="">All Grades</option>
             <option value="above-9">Above 9</option>
             <option value="9-to-8">9 to 8</option>
             <option value="7-to-8">7 to 8</option>
             <option value="below-7">Below 7</option>
           </select>
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="filter-attendance"
-            className="block text-lg font-semibold mb-2"
-          >
-            Filter by Attendance:
-          </label>
+        </label>
+        <label>
+          Attendance Filter:
           <select
-            id="filter-attendance"
             value={attendanceFilter}
             onChange={(e) => setAttendanceFilter(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
           >
-            <option value="">All</option>
+            <option value="">All Attendance</option>
             <option value="above-95">Above 95%</option>
             <option value="90-to-95">90% to 95%</option>
             <option value="85-to-90">85% to 90%</option>
             <option value="75-to-85">75% to 85%</option>
             <option value="below-75">Below 75%</option>
           </select>
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="filter-branch"
-            className="block text-lg font-semibold mb-2"
-          >
-            Filter by Branch:
-          </label>
+        </label>
+        <label>
+          Branch Filter:
           <select
-            id="filter-branch"
             value={branchFilter}
             onChange={(e) => setBranchFilter(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded"
           >
-            <option value="">All</option>
+            <option value="">All Branches</option>
             <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
             <option value="ECE">ECE</option>
-            <option value="EEE">EEE</option>
-            <option value="ME">ME</option>
           </select>
-        </div>
-
-        {/* Buttons to Open Charts */}
-        <div className="flex justify-around mt-4">
-          <button
-            onClick={() => openChartPopup("grades")}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            View Grades Chart
-          </button>
-          <button
-            onClick={() => openChartPopup("attendance")}
-            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-          >
-            View Attendance Chart
-          </button>
-        </div>
+        </label>
       </div>
-
-      {/* Display filtered student data */}
-      <div className="max-w-xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4">Student Details</h2>
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 p-2">Name</th>
-              <th className="border border-gray-300 p-2">Branch</th>
-              <th className="border border-gray-300 p-2">Grades</th>
-              <th className="border border-gray-300 p-2">Attendance</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((student, index) => (
-              <tr key={index}>
-                <td className="border border-gray-300 p-2">{student.Name}</td>
-                <td className="border border-gray-300 p-2">{student.BRANCH}</td>
-                <td className="border border-gray-300 p-2">{student.GRADES}</td>
-                <td className="border border-gray-300 p-2">
-                  {student.Attendance}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div>
+        <button onClick={() => openChartPopup("grades")}>View Grades Chart</button>
+        <button onClick={() => openChartPopup("attendance")}>View Attendance Chart</button>
       </div>
     </div>
   );
