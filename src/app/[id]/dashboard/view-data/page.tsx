@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
+import { PieChart, Pie, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Cell } from 'recharts';
 
-const DynamicPieChart = dynamic(() => import('recharts').then((mod) => mod.PieChart), { ssr: false });
-const DynamicPie = dynamic(() => import('recharts').then((mod) => mod.Pie), { ssr: false });
-const DynamicBarChart = dynamic(() => import('recharts').then((mod) => mod.BarChart), { ssr: false });
-const DynamicBar = dynamic(() => import('recharts').then((mod) => mod.Bar), { ssr: false });
-const DynamicXAxis = dynamic(() => import('recharts').then((mod) => mod.XAxis), { ssr: false });
-const DynamicYAxis = dynamic(() => import('recharts').then((mod) => mod.YAxis), { ssr: false });
-const DynamicTooltip = dynamic(() => import('recharts').then((mod) => mod.Tooltip), { ssr: false });
-const DynamicLegend = dynamic(() => import('recharts').then((mod) => mod.Legend), { ssr: false });
-const DynamicCell = dynamic(() => import('recharts').then((mod) => mod.Cell), { ssr: false });
+
+const DynamicPieChart = dynamic(() => import('recharts').then((mod) => mod.PieChart as any) as Promise<typeof PieChart>, { ssr: false });
+const DynamicPie = dynamic(() => import('recharts').then((mod) => mod.Pie as any) as Promise<typeof Pie>, { ssr: false });
+const DynamicBarChart = dynamic(() => import('recharts').then((mod) => mod.BarChart as any) as Promise<typeof BarChart>, { ssr: false });
+const DynamicBar = dynamic(() => import('recharts').then((mod) => mod.Bar as any) as Promise<typeof Bar>, { ssr: false });
+const DynamicXAxis = dynamic(() => import('recharts').then((mod) => mod.XAxis as any) as Promise<typeof XAxis>, { ssr: false });
+const DynamicYAxis = dynamic(() => import('recharts').then((mod) => mod.YAxis as any) as Promise<typeof YAxis>, { ssr: false });
+const DynamicTooltip = dynamic(() => import('recharts').then((mod) => mod.Tooltip as any) as Promise<typeof Tooltip>, { ssr: false });
+const DynamicLegend = dynamic(() => import('recharts').then((mod) => mod.Legend as any) as Promise<typeof Legend>, { ssr: false });
+const DynamicCell = dynamic(() => import('recharts').then((mod) => mod.Cell as any) as Promise<typeof Cell>, { ssr: false });
 
 const MainPage = () => {
   const [data, setData] = useState([]);
